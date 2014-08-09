@@ -23,6 +23,7 @@ function modify_value()
 
 </head>
 
+<!-- HTML body -->
 <body>
 <div id="container"><!--FORMS CONTAINER-->
 
