@@ -31,16 +31,7 @@
 				<attribute name="Built-At" value="${build-info.current-time}" />
 			</manifest>
 		</war>
-		
-		<!-- Send the war file to remote server via FTP to ftp://anonymous@192.168.2.6/NFSfiles-->	
-		<ftp server="192.168.2.6"
-		       remotedir="NFSfiles"
-		       userid="anonymous"
-		       password="me@myorg.com"
-		       depends="yes">
-		    <fileset dir="${build-directory}/"/>
-		 </ftp>
-		
+			
 	</target>
 
 </project>
