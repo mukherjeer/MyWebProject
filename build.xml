@@ -4,7 +4,8 @@
 	<property name="project-name" value="${ant.project.name}" />
 	<property name="builder" value="TeamMotorCloud" />
 
-	<property name="war-file-name" value="${project-name}.war" />
+	<!-- <property name="war-file-name" value="${project-name}.war" /> -->
+	<property name="war-file-name" value="TEST_JENKINS.war" />
 	<property name="source-directory" value="src" />
 	<property name="classes-directory" value="bin" />
 	<property name="web-directory" value="WebContent" />
@@ -19,7 +20,7 @@
 		<mkdir dir="${build-directory}" />
 		<delete file="${build-directory}/${war-file-name}" />
 		<war warfile="${build-directory}/${war-file-name}" webxml="${web-xml-file}">
-	<!--		<classes dir="${classes-directory}" /> -->
+		<!--<classes dir="${classes-directory}" /> -->
 			<fileset dir="${web-directory}">
 				<!-- Need to exclude it since webxml is an attribute of the war tag above -->
 				<exclude name="WEB-INF/web.xml" />
@@ -30,6 +31,16 @@
 				<attribute name="Built-At" value="${build-info.current-time}" />
 			</manifest>
 		</war>
+		
+		<!-- Send the war file to remote server via FTP to ftp://anonymous@192.168.2.6/NFSfiles-->	
+		<ftp server="192.168.2.6"
+		       remotedir="NFSfiles"
+		       userid="anonymous"
+		       password="me@myorg.com"
+		       depends="yes">
+		    <fileset dir="${build-directory}/"/>
+		 </ftp>
+		
 	</target>
 
 </project>
