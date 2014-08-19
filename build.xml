@@ -6,90 +6,34 @@
 
 	<!-- <property name="war-file-name" value="${project-name}.war" /> -->
 	<property name="war-file-name" value="TEST_JENKINS.war" />
-	<property name="build.dir" value="build" />
-	<property name="src.dir" value="${build.dir}/src"/>
-	<property name="test.dir" location="${build.dir}/test/src"/>
-	<property name="test.data.dir" location="${build.dir}/test/data"/>
+	<property name="build-directory" value="build" />
 	<property name="classes-directory" value="bin" />
 	<property name="web-directory" value="WebContent" />
 	<property name="web-xml-file" value="WebContent/WEB-INF/web.xml" />
-	<property name="junit.class.name" value="com.MyProject.Sample.UnitTestsTest"/>
+	<property name="junit.class.name" value="src/com/MyProject/Sample.UnitTestsTest"/>
 
 	<tstamp prefix="build-info">
 		<format property="current-date" pattern="d-MMMM-yyyy" locale="en" />
 		<format property="current-time" pattern="hh:mm:ss a z" locale="en" />
 	</tstamp>
 	
-	<!-- Classpath to find java packages -->
-	<path id="classpath.base">
-	      <pathelement location="/usr/lib/jvm/java/lib/tools.jar" />
-	</path>
-	
-	<!-- Classpath for tests to find src packages -->
-	<path id="classpath.src">
-	 	<pathelement location="src" />
-    </path>
-
-	<path id="classpath.junittest">
-	    <path refid="classpath.base" />
-		<pathelement location="/usr/lib/jvm/java/lib/tools.jar" />
-		<pathelement location="${test.dir}" />
-	</path>
-
-	<!-- Clean the build Folder-->
-	<target name="clean" description="Remove all .class files">
-		<delete includeEmptyDirs="true" failonerror="false">
-		<fileset dir="${src.dir}">
-	 		<include name="**/*.class"/>
-	    </fileset>
-	    <fileset dir="${test.dir}">
-	    	<include name="**/*.class"/>
-	    </fileset>
-	    </delete>
-	</target>
-
-	
-	<!-- Make Requisite directories -->
-	<target name="makedir">
-		<mkdir dir="${build.dir}"/>
-		<mkdir dir="${src.dir}"/>
-		<mkdir dir="${test.dir}"/>
-	</target>
-
-	
-	<!-- Compile Task -->
-	<target name="compile" depends="clean,makedir">
-		<javac srcdir="${src.dir}" destdir="${src.dir}" debug="true" includeAntRuntime="false">		
-			<classpath refid="classpath.base"/>
-			<include name="**/*.java"/>
-		</javac>
+	<target name="compile">
+		<mkdir dir="staging"/>
+		<javac includeantruntime="false" srcdir="./src" destdir="staging" classpath="/opt/ant/lib/junit-3.8.2.jar" />
 	</target>
 	
-	<!--Compile Test -->
-	<target name="compile-test" depends="compile">
-	      <javac srcdir="${test.dir}" destdir="${test.dir}" debug="true" includes="${src.dir}" includeAntRuntime="false">
-	        <classpath refid="classpath.base"/>
-	        <classpath refid="classpath.src"/>
-	        <classpath refid="classpath.junittest"/>
-	        <include name="**/*.java"/>
-	      </javac>
-	    </target>
-
-	
-	<!-- Add code for Junit Task-->
-	<target name="test" depends="compile-test" >
-	  <mkdir dir="${test.data.dir}"/>
-	  <junit fork="yes" haltonfailure="yes" showoutput="yes" printsummary="true">
-	    <test name="${junit.class.name}" todir="${test.data.dir}"/>
-	    <formatter type="plain" usefile="false" />
-	  	<classpath refid="classpath.base" />
-		<classpath refid="classpath.src" />
-		<classpath refid="classpath.junittest" />
-	  </junit>
+	<target name="test" depends="compile">
+		 <junit haltonfailure="yes" printsummary="on">
+		    <test name="com.MyProject.Sample.UnitTestsTest" />
+		    <classpath>
+		    	<pathelement location="/opt/ant/lib/junit-3.8.2.jar" />
+		    	<pathelement location="staging" />
+		   	</classpath>
+		  </junit>
 	</target>
-	
+
 	<target name="war" depends="">
-		<!--<mkdir dir="${build-directory}" />-->
+		<mkdir dir="${build-directory}" />
 		<delete file="${build-directory}/${war-file-name}" />
 		<war warfile="${build-directory}/${war-file-name}" webxml="${web-xml-file}">
 			<!--<classes dir="${classes-directory}" /> 
