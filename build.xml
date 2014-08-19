@@ -6,21 +6,33 @@
 
 	<!-- <property name="war-file-name" value="${project-name}.war" /> -->
 	<property name="war-file-name" value="TEST_JENKINS.war" />
-	<property name="source-directory" value="src" />
+	<property name="source-directory" value="./src" />
 	<property name="classes-directory" value="bin" />
 	<property name="web-directory" value="WebContent" />
 	<property name="web-xml-file" value="WebContent/WEB-INF/web.xml" />
+	<property name="test.class.name" value="com.MyProject.Sample.UnitTestsTest"/>
 	<tstamp prefix="build-info">
 		<format property="current-date" pattern="d-MMMM-yyyy" locale="en" />
 		<format property="current-time" pattern="hh:mm:ss a z" locale="en" />
 	</tstamp>
 	<property name="build-directory" value="build" />
 
+	<!-- Add code for Junit Task-->
+	<target name="test">
+	  <junit fork="yes" haltonfailure="yes">
+	    <test name="${test.class.name}" />
+	    <formatter type="plain" usefile="false" />
+	    <!--<classpath refid="test.classpath" />-->
+	  </junit>
+	</target>
+	
 	<target name="war" depends="">
 		<mkdir dir="${build-directory}" />
 		<delete file="${build-directory}/${war-file-name}" />
 		<war warfile="${build-directory}/${war-file-name}" webxml="${web-xml-file}">
-		<!--<classes dir="${classes-directory}" /> -->
+			<!--<classes dir="${classes-directory}" /> 
+			<source dir="${source-directory}" />
+			-->
 			<fileset dir="${web-directory}">
 				<!-- Need to exclude it since webxml is an attribute of the war tag above -->
 				<exclude name="WEB-INF/web.xml" />
