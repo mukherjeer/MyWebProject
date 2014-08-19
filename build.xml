@@ -19,7 +19,7 @@
 	
 	<target name="compile">
 		<mkdir dir="staging"/>
-		<javac includeantruntime="false" srcdir="./src" destdir="staging" />
+		<javac includeantruntime="false" srcdir="./src" destdir="staging" classpath="/opt/ant/lib/junit-3.8.2.jar" />
 	</target>
 	
 	<target name="test" depends="compile">
