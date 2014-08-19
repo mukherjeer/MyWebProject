@@ -17,9 +17,16 @@
 		<format property="current-time" pattern="hh:mm:ss a z" locale="en" />
 	</tstamp>
 	
-	<target name="compile">
-		<mkdir dir="staging"/>
-		<javac includeantruntime="false" srcdir="src" destdir="staging" />
+	<target name="clean">
+		<delete dir="./staging"/>
+	</target>
+	
+	<target name="makedir">
+		<mkdir dir="./staging"/>
+	</target>
+	
+	<target name="compile" depends="clean,makedir">
+		<javac includeantruntime="false" srcdir="./src" destdir="./staging" />
 	</target>
 	
 	<target name="test" depends="compile">
