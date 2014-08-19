@@ -32,6 +32,7 @@
 	<target name="test" depends="compile">
 		 <junit haltonfailure="yes" showoutput="yes" printsummary="on">
 		    <test name="com.MyProject.Sample.UnitTestsTest" />
+		 	<formatter type="plain" usefile="false" />
 		    <classpath>
 		    	<pathelement location="staging" />
 		   	</classpath>
