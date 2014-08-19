@@ -27,7 +27,7 @@
 	
 	<!-- Classpath for tests to find src packages -->
 	<path id="classpath.src">
-	 	<pathelement location="src.dir" />
+	 	<pathelement location="src" />
     </path>
 
 	<path id="classpath.junittest">
