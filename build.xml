@@ -6,19 +6,35 @@
 
 	<!-- <property name="war-file-name" value="${project-name}.war" /> -->
 	<property name="war-file-name" value="TEST_JENKINS.war" />
-	<property name="source-directory" value="./src" />
+	<property name="source-directory" value="src" />
 	<property name="classes-directory" value="bin" />
 	<property name="web-directory" value="WebContent" />
 	<property name="web-xml-file" value="WebContent/WEB-INF/web.xml" />
-	<property name="test.class.name" value="/var/lib/jenkins/jobs/TestJob1/workspace/src/com/MyProject/Sample/UnitTestsTest"/>
+	<property name="test.class.name" value="${build-directory}/classes/UnitTestsTest"/>
 	<tstamp prefix="build-info">
 		<format property="current-date" pattern="d-MMMM-yyyy" locale="en" />
 		<format property="current-time" pattern="hh:mm:ss a z" locale="en" />
 	</tstamp>
 	<property name="build-directory" value="build" />
 
+	<!-- Clean the build Folder-->
+	<target name ="clean">
+		<delete dir="${build-directory}"/>
+	</target>
+	
+	<!-- Make Requisite directories -->
+	<target name="makedir">
+		<mkdir dir="${build-directory}"/>
+		<mkdir dir="${build-directory}/classes"/>
+	</target>
+	
+	<!-- Compile Task -->
+	<target name="compile" depends="clean,makedir">
+		<javac srcdir="${source-directory}" destdir="${build-directory}/classes" />
+	</target>
+	
 	<!-- Add code for Junit Task-->
-	<target name="test">
+	<target name="test" depends="compile">
 	  <junit fork="yes" haltonfailure="yes">
 	    <test name="${test.class.name}" />
 	    <formatter type="plain" usefile="false" />
@@ -27,7 +43,7 @@
 	</target>
 	
 	<target name="war" depends="">
-		<mkdir dir="${build-directory}" />
+		<!--<mkdir dir="${build-directory}" />-->
 		<delete file="${build-directory}/${war-file-name}" />
 		<war warfile="${build-directory}/${war-file-name}" webxml="${web-xml-file}">
 			<!--<classes dir="${classes-directory}" /> 
