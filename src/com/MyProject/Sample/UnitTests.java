@@ -11,7 +11,7 @@ public class UnitTests
 			total += vec[i];
 		}
 		//Deliberate error
-		total = total - 1;
+		//total = total - 1;
 		return total;
 	}
 }
