@@ -30,7 +30,9 @@
 	
 	<!-- Compile Task -->
 	<target name="compile" depends="clean,makedir">
-		<javac srcdir="${source-directory}" destdir="${build-directory}/classes" />
+		<javac srcdir="${source-directory}" destdir="${build-directory}/classes" >
+			<include name="**/*.java"/>
+		</javac>
 	</target>
 	
 	<!-- Add code for Junit Task-->
