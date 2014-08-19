@@ -10,7 +10,7 @@
 	<property name="classes-directory" value="bin" />
 	<property name="web-directory" value="WebContent" />
 	<property name="web-xml-file" value="WebContent/WEB-INF/web.xml" />
-	<property name="test.class.name" value="build/classes/com/Myproject/Sample/UnitTestsTest.class"/>
+	<property name="test.class.name" value="build/classes/com/MyProject/Sample/UnitTestsTest"/>
 	<tstamp prefix="build-info">
 		<format property="current-date" pattern="d-MMMM-yyyy" locale="en" />
 		<format property="current-time" pattern="hh:mm:ss a z" locale="en" />
