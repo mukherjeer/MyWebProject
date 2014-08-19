@@ -52,11 +52,13 @@
 	</target>
 
 	
-	<!-- Make Requisite directories >
+	<!-- Make Requisite directories -->
 	<target name="makedir">
 		<mkdir dir="${build.dir}"/>
+		<mkdir dir="${src.dir}"/>
+		<mkdir dir="${test.dir}"/>
 	</target>
-	-->
+
 	
 	<!-- Compile Task -->
 	<target name="compile" depends="clean">
