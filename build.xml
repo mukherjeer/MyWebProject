@@ -58,7 +58,7 @@
 
 	
 	<!-- Compile Task -->
-	<target name="compile" depends="clean">
+	<target name="compile" depends="clean,makedir">
 		<javac srcdir="${src.dir}" destdir="${src.dir}" debug="true" includeAntRuntime="false">		
 			<classpath refid="classpath.base"/>
 			<include name="**/*.java"/>
